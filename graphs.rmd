@@ -1,0 +1,71 @@
+---
+title: "3 ways to make a barplot : From Basic To Interactive"
+author: "R-Ladies Tunis"
+date: "15/06/2020"
+header-includes: 
+      \usepackage{graphicx}
+      \usepackage{fancyhdr}
+      \pagestyle{fancy}
+      \setlength\headheight{28pt}
+      \fancyhead[L]{\includegraphics[width=5cm]{logo.jpg}}
+      \fancyfoot[LE,RO]{GPIM}
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+``` 
+
+# **Introduction**
+Nowadays we all talk about the power of graphs. The purpose of a graph is to present data effectively and in a simple way. A graph is more effective than a text. In this article, we will show you how to create a barplot using R in three different ways. A barplot is used to visualize counts of unique data point values in the sample space of a categorical variable. Let's get started.
+
+# **Basic Barplot**
+
+First, we will create a basic barplot using barplot() function: 
+
+```{r,include=FALSE}
+library(ggplot2)
+```
+```{r,include=TRUE}
+counts <- table(diamonds$clarity)
+barplot(counts, main="Distribution of the clarity of Diamonds",
+        xlab="Clarity")
+```
+
+# **Barplot using ggplot2**
+
+Now, let's make the graph look prettier using ggplot2. The geom_bar function we can determine the color of the bars. With ggtitle() you can add the title of the graph and the title of the axes.
+
+```{r,include=TRUE}
+#loding ggplot2 package
+library(ggplot2)
+
+ggplot(diamonds, aes(x=as.factor(clarity) )) +
+  geom_bar(color="blue", fill=rgb(0.1,0.4,0.5,0.7) )+
+  ggtitle("Distribution of the clarity of Diamonds") +
+  xlab("Clarity type") + ylab("Count")
+
+```
+
+# **Barplot using plotly**
+
+Now let's make the barplot interactive using plotly. An interactive graph is very useful when we work with dashboards.
+
+```{r,include=TRUE,message=FALSE,warning=FALSE}
+#loding plotly package
+library(plotly)
+
+p1 <- plot_ly(x = names(table(diamonds$clarity)),
+              y = as.numeric(table(diamonds$clarity)),
+              name = "clarity",
+              type = "bar")%>% 
+  layout(title = "Distribution of the clarity of Diamonds",
+         xaxis = list(title = "clarity",
+                      zeroline = FALSE),
+         yaxis = list(title = "Number",
+                      zeroline = FALSE))
+p1
+```
