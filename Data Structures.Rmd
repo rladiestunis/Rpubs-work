@@ -1,1 +1,644 @@
 
+---
+title: "Data Structures in R"
+author: "R-Ladies Tunis"
+date: "21/06/2020"
+output: 
+ prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction 
+This article is the training materials of our second meetup "Data Structures in R". The aim of this meetup is to introduce you to the basic structure in programming with R.
+
+We are covering : 
+ 1. Vectors 
+ 2. Matrix 
+ 3. Dataframes 
+ 4. Lists
+ 5. Arrays
+ 
+# 1.Vectors
+
+Vector is a basic structure in R. They can contain a single member or multiple members.
+
+## 1.1 How to create a vector
+
+### Single vector 
+
+```{r}
+a <- 2
+a 
+```
+
+### Vectors with multiple elements 
+
+#### Using c() function
+
+Vectors are generally created using the c() function. They can be : numeric, logic, characters or factors.
+
+Let's create our first vectors 
+
+```{r}
+#Numeric vector 
+x <- c(1,2,3,6,8)
+x
+#Logical vector
+y <- c(TRUE,FALSE,TRUE,TRUE)
+y
+#Character vector 
+z <- c("Apple","Banana","Orange")
+z
+```
+
+#### Using seq() function
+
+You can also create a vector using seq() function. In seq() you specify the step using by.
+
+```{r}
+d <- seq(1, 3, by=0.2)
+d
+```
+
+Or you can also specify the length of the vector using length.out
+
+```{r}
+e <- seq(1, 8, length.out=4)  
+e
+```
+
+#### Using rep() function
+
+You can also create a vector using rep() function combined with each or times
+
+```{r}
+f1 <- rep(c(1,2,3), times = 3) #using times the vector will be replicated 3 times
+f1
+```
+
+```{r}
+f2 <- rep(c(1,2,3), each = 3) #using each, each element of the vector will be replicated 3 times 
+f2
+```
+
+## 1.2 How to know the type and length of a vector
+
+To know the type of a vector, you use a function called typeof() and to know the length, you use a function called length().
+
+```{r}
+h <- c(1,22,3,54,96) 
+typeof(h)
+
+g <- c("banana","tomato","hello")
+typeof(g)
+length(g)
+```
+
+
+## 1.3 How to combine vectors
+Vectors can be combined via the function c. For examples, the following two vectors h1 and h2 are combined into a new vector containing elements from both vectors.
+
+```{r}
+h1 <- c("banana","orange","cherry")
+h2 <- c("strawberry","kiwi")
+h3 <- c(h1,h2)
+h3
+```
+## 1.4 How to access an element of a vector 
+
+Vector index in R starts from 1, unlike most programming languages where index start from 0.
+
+We can use a vector of integers as index to access specific elements.
+
+We can also use negative integers to return all elements except that those specified.
+
+
+```{r}
+g <- c("banana","tomato","hello")
+g[1] #access the first element
+h <- c(1,22,3,54,96) 
+h[4] #access the fourth element 
+```
+
+## 1.5 How to modify an element of a vector 
+
+We can modify a vector using the assignment operator.
+
+```{r}
+g <- c("banana","tomato","hello")
+g[2] <- "strawberry"
+g
+h <- c(1,22,3,54,96) 
+h[4]<-100
+h
+```
+
+## 1.6 How to delete an element of a vector 
+
+```{r}
+x <- c(-3,-2,-1,0,1,2)
+x <- NULL
+x
+```
+
+## 1.7 Vector arithmetics
+
+You can do all the arithmetics operations within vectors :
+
+```{r}
+s <- c(1,2,3,5,6)
+z <- c(2,3,8,9,7)
+
+q <- s+z #addition
+q
+s2 <- s*2 #multiplication
+s2
+q2 <- s-z #soustraction
+q2
+q3 <- s/z #division
+q3
+```
+
+# 2.Matrices
+# 2.1 How to create a matrix
+
+Matrices are R objects in which the elements are arranged in a **two-dimensional** array.
+
+A matrix can be considered as a join of vectors.
+Matrices can be created by `column-binding` or `row-binding` with the **cbind()** and **rbind()** functions.
+
+```{r}
+x <- 1:3
+y <- 10:12
+cbind(x, y)
+rbind(x, y)
+```
+
+The basic syntax for creating a matrix in R is :
+`matrix(data, nrow, ncol, byrow, dimnames)`
+
+1. **data** is the input vector which becomes the data elements of the matrix.
+2. **nrow** is the number of rows to be created.
+3. **ncol** is the number of rows to be created.
+4. **byrow** is a logical clue. if TRUE then the input vector elements are arranged by row.
+5. **dimnames** are the names assigned to the rows and columns.
+
+
+```{r}
+M <- matrix(3:14, nrow = 2, byrow = TRUE) 
+```
+
+Matrices can be created directly from vectors by adding a dimension attribute.
+```{r}
+vector <- 1:10
+dim(vector) <- c(2,5)
+```
+
+```{r}
+dim(M) # dimension of the matrix
+```
+
+Let's consider a matrix P. Let's define the column and row names :
+  
+```{r}
+rownames <- c("gene1", "gene2", "gene3", "gene4")
+colnames <- rep(c("control", "treatment"), times = 2, each=1)
+```
+Let's create the matrix :
+
+```{r}
+P <- matrix(c(1:16), nrow = 4, byrow = TRUE, dimnames = list(rownames, colnames))
+P
+```
+
+# 2.2 Access to an element of the matrix
+
+To access the element at 1st row, 3rd column :
+
+```{r}
+P[1,3]
+```
+
+Let's access all the rows of column 4:
+  
+```{r}
+P[,4]
+```
+
+Let's access the 2nd row of all the columns:
+
+
+```{r}
+P[2,]
+```
+
+
+# 2.3 Matrix Multiplication
+
+R has two multiplication operators for matrices :
+
+* The first one is denoted by `*` which is the same as a simple multiplication sign. This operation does a simple element by element multiplication up to matrices.
+
+* The second operator is denoted by `%*%` and it performs a matrix multiplication between the two matrices.
+
+
+Let's see an example:
+  
+M is a matrix of 4 rows and 3 columns.
+
+```{r}
+M <- matrix(c(3:14), nrow = 4)
+M
+```
+
+What's the dimension of M ?
+`NOTE: The dimensions of a matrix are the number of rows by the number of columns.`
+`If a matrix has a rows and b columns, it is an a×b matrix.`  
+
+```{r}
+dim(M)
+```
+
+P is a matrix of 4 rows and 3 columns
+```{r}
+P <- matrix(c(20:31), nrow = 4)
+P
+```
+
+`NOTE: P and M have same dimensions so we can do element by element multiplication.`
+
+```{r}
+P*M
+```
+
+Let's move to the algebric matrix multiplication in R.
+
+N is a matrix of 3 rows and 4 columns
+
+```{r}
+N <- matrix(c(1:12), nrow = 3)
+N
+```
+
+What's the dimension of N ?
+
+```{r}
+dim(N)
+```
+
+
+Let's do matrix multiplication in R :
+  
+```{r}
+M %*% N
+```
+
+
+# 3.Data Frames
+
+Data frames are used to store tabular data in R. They are an important type of object in R and are used in a variety of statistical modeling applications.
+
+Data frames are represented as a special type of list where every element of the list has to have the same length. Each element of the list can be thought of as a column and the length of each element of the list is the number of rows.
+
+Unlike matrices, data frames can store different classes of objects in each column. Matrices must have every element be the same class (e.g. all integers or all numeric).
+
+# 3.1 How to create a data frame
+Data frames are usually created by reading in a dataset using the **read.table()** or **read.csv()**. However, data frames can also be created explicitly with the **data.frame()** function.
+
+```{r}
+# Create the data frame
+data <- 	data.frame(
+  Gender = rep(c("Male", "Female"), times = c(4, 6)),
+  Height = c(152, 171.5, 165, 170, 155, 167, 172.1, 165.8, 167, 181), 
+  Weight = c(61, 93, 78, 61, 45, 57, 61, 55, 56, 71),
+  Age = c(22, 38, 26, 60, 25, 17, 26, 18, 17, 55),
+  Married = rep(c("Yes", "No"), times = c(6, 4))
+)
+print(data)
+```
+
+```{r}
+nrow(data)
+ncol(data)
+```
+
+R objects can have names, which is very useful for writing readable code and self-describing objects.
+
+Note that for data frames, there is a separate function for setting the row names, the **row.names()** function. Also, data frames do not have column names, they just have names (like lists). So to set the column names of a data frame just use the **names()** function.
+
+# 3.2 How to set column names and row names of a data frame
+
+```{r}
+names(data) # columns names 
+row.names(data) <- c("1st row", "2nd row", "3rd row","4th row","5th row","6th row",
+                     "7th row","8th row","9th row","10th row")
+data
+```
+
+# 3.3 Header of the data frame
+
+Running this you will get the header of your dataset to get information about the variables and their values.
+```{r}
+head(data)
+tail(data)
+```
+
+# 3.4 Structure of the data frame
+
+To get information about the structure of dataset (i.e if variable is numeric or factor).
+
+```{r}
+str(data)
+summary(data)
+```
+
+# 3.5 Missing values in a data frame
+
+Check the data for missing values.
+
+```{r}
+sapply(data, function(x) sum(is.na(x)))
+is.na(data)
+is.na(data$Gender)
+sum(is.na(data$Gender))
+```
+
+# 3.6 Adding and removing columns from a data frame
+
+There are many different ways of adding and removing columns from a data frame.
+
+```{r}
+# Ways to add a column
+data$Status      <- c("student", "employee", "freelancer", "student", "employee", "freelancer", "student", "employee", "freelancer", "student")
+# data[["Status"]] <- c("student", "employee", "freelancer", "student", "employee", "freelancer",
+#                     "student", "employee", "freelancer", "student")
+# data[,"Status"]  <- c("student", "employee", "freelancer", "student", "employee", "freelancer",
+#                      "student", "employee", "freelancer", "student")
+# data$Status      <- "employee"   # Use the same value (employee) for all rows
+
+# Ways to remove the column
+data$Age      <- NULL
+data[["Age"]] <- NULL
+data[,"Age"]  <- NULL
+# data[[4]]      <- NULL
+# data[,4]       <- NULL
+# data  <- subset(data, select=-size)
+data
+```
+
+# 3.7 Reordering the columns in a data frame
+
+```{r}
+# Reorder by column number
+data[c(1,3,2,4,5)]
+
+# To actually change `data`, you need to save it back into `data`:
+# data <- data[c(1,3,2,4,5)]
+
+# Reorder by column name
+data[c("Gender", "Weight", "Height","Married","Status")]
+```
+
+# 3.8 Convert a column to a factor
+
+We can do the following with R’s built-in functions.
+```{r}
+data$Married[data$Married=="Yes"] <- "1"
+data$Married[data$Married=="No"] <- "0"
+# Convert the column to a factor
+data$Married <- factor(data$Married)
+data
+```
+
+# 4.Lists
+
+Lists are data structures having components of **mixed** data types. They allow to store a variety of objects under one name. These objects can be matrices, vectors, data frames or even other lists. The different component of a list have **different length, characteristic and type**. We could consider a list as some kind of **super data type** in R. You can practically store any piece of information in it.
+
+# 4.1 How to create a list
+
+List can be created using the **list()** function. The arguments to the list function are the list **components**. 
+The syntax is `list(comp1,comp2,...)`
+The arguments to the list function are the list components.
+**Remeber that these components can be matrices, vectors, data frames or even other lists.**
+Following is an example to create a list containing strings, numbers, vectors.
+
+```{r}
+list1 <- list(name = "Sami", hobbie = c("programming", "cinema", "statistics", "mathematics"), age=54, genome = "ACGTCGTACAGTGCACGTGCA")
+list1
+```
+
+# 4.2 How to access components of a list
+
+Lists can be accessed the same way as vectors. Indexing with `[` will give us **sublist** not the content inside the component. 
+
+Let's see an example
+
+*  **indexing using a character vector:**
+
+```{r}
+list1[c("age","hobbie")] 
+```
+
+*  **indexing using a logical vector:**
+
+```{r}
+list1[c(T,F,F,T)]
+```
+
+*  **indexing using an integer vector:**
+
+```{r}
+list1[c(3:4)] 
+```
+
+Be aware that `[` returns a list.
+
+# 4.3 How to access an element of a component of a list
+
+To retrieve the content, we need to use `[[`.
+
+However, this approach will allow us to access only a **single component** at a time. 
+Let's say we want to see the name:
+
+```{r}
+# access an element from a list
+list1[["name"]]
+```
+
+Another way of accessing content of a list is the `$` operator.
+
+```{r}
+list1$name
+```
+
+The main advantage of using `$` is the partial matching on tags that it allows. 
+Let's see an example:
+
+```{r}
+list1$na
+```
+
+Beside of selecting components, we often need to select specific elements out of these components. For example to select the first element of the second component of the list we run `list1[[2]][1]`
+```{r}
+list1[[2]][1]
+```
+
+# 4.4 How to modify a list in R
+
+We can change components of a list through **reassignment**. 
+For that, we can choose any of the component accessing techniques discussed above to modify it.
+
+**Be aware that modification causes reordering of components.**
+
+
+```{r}
+#change an element from a list
+list1[["name"]] <- "Ali"
+```
+
+or 
+
+```{r}
+list1$name <- "Ali"
+```
+
+Let's check 
+
+```{r}
+list1
+```
+
+
+# 4.5 How to add components to a list
+
+To add new components we simply assign values using new tags.
+
+```{r}
+list1$passed <- FALSE
+list1
+```
+
+
+# 4.6 How to delete components from a list
+
+We can delete a component by assigning `NULL` to it.
+
+```{r}
+list1[["hobbie"]] <- NULL
+list1
+```
+
+# 4.7 How to merge Lists
+You can merge many lists into one list by placing all the lists inside one list() function. Let's create a second list.
+
+```{r}
+# create a second list
+list2=list("ahmed", c("programming", "music", "biology", "mathematics"), 65, "AggTTAGTAGATGTAGTCCCGTAA")
+names(list2) <- c("name", "hobbie", "age", "genome")
+list2
+```
+
+Let's merge the two lists.
+
+```{r}
+# Merge the two lists.
+merged.list <- c(list1,list2)
+merged.list
+```
+
+# 5.Arrays
+
+Arrays are the R data objects which can store data in **more than two dimensions**. 
+**Be aware that arrays can store the values having only a `similar` kind of data types.**
+
+# 5.1 How to create an array
+
+An array is created using the **array()** function. It takes vectors as input and uses the values in the dim parameter to create an array. 
+For example − If we create an array of dimension (2, 3, 4) then it creates 4 rectangular matrices each with 2 rows and 3 columns. Arrays can store only data type.
+
+```{r}
+# create first vector
+vector1 <-  seq(5,20, 5) #seq() function generates a sequence of numbers.
+# create second vector
+vector2 <-  seq(25,60,5)
+vector1
+vector2
+```
+
+`seq() function generates a sequence of numbers. seq(from, to, by)`
+
+* **from, to**: begin and end number of the sequence
+* **by**: step, increment (Default is 1)`
+
+Let's create our first array of dimension (2,3,4). The syntax is the following `Array_NAME <- array(data, dim = (row_Size, column_Size, matrices, dimnames)`
+
+* **data** – Data is an input vector that is given to the array.
+* **matrices** – Array in R consists of multi-dimensional matrices.
+* **row_Size** – row_Size describes the number of row elements that an array can store.
+* **column_Size** – Number of column elements that can be stored in an array.
+* **dimnames** – Used to change the default names of rows and columns to the user’s preference.
+
+```{r}
+myfirstarray <-array(c(vector1,vector2),dim = c(2,3,4))
+myfirstarray
+```
+
+# 5.2 How to raname the rows and/or the columns of an array
+
+Let's rename our arrays to `array1`,`array2`,`array3` and `array4` by using `array.names`.
+Also,the rows names changed to ("row1","row2") and column names will be changed to ("column1","column2","column3") respectively.The dimension of the matrix is 2 rows and 3 columns.
+
+```{r}
+column.names <- c("column1","column2","column3")
+row.names <- c("row1","row2")
+array.names <- c("array1","array2","array3","array4")
+myfirstarray <- array(c(vector1,vector2),dim = c(2,3,4),dimnames = list(row.names,column.names,array.names))
+myfirstarray
+```
+
+# 5.3 How to access an element of an array
+Let's see how the elements in the array can be extracted with the following examples.
+Let's access the number 55. The number 55 is in the first row of the third column of the second array.
+
+```{r}
+myfirstarray[1,3,2]
+```
+
+We can access the entire array `myfirstarray` with the following syntax where `myfirstarray[ , ,1]` specifies to include all rows and columns each separated by commas, which are indicated by space. The 1 specifies the array `myfirstarray` to be extracted.
+
+```{r}
+myfirstarray[ , ,1]
+```
+
+# 5.4 How to create matrices from these array
+
+```{r}
+matrix1 <-myfirstarray[ , ,1]
+matrix2 <- myfirstarray[ , ,2]
+```
+
+Let's visualize the first matrix
+```{r}
+matrix1
+```
+
+Let's visualize the second matrix
+```{r}
+matrix2
+```
+
+
+# REFERENCES
+http://www.r-tutor.com/r-introduction/vector/combining-vectors
+https://www.datamentor.io/r-programming/vector/
+https://www.programmingr.com/matrix-multiplication/
+
+https://www.datacamp.com/community/tutorials/creating-lists-r
+https://www.geeksforgeeks.org/r-lists/?ref=leftbar-rightbar
+https://www.datacamp.com/community/tutorials/arrays-in-r
+https://www.tutorialspoint.com/r/r_arrays.htm
+---
