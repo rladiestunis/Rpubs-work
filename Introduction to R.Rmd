@@ -1,0 +1,196 @@
+---
+title: "Workshop Introduction to R"
+author: "R-Ladies Tunis"
+date: "06/06/2020"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# **Introduction** 
+
+This article will serve you as training materials to learn Data Structure in R and also will cover the topics we talk about in our meetup held on 6th June 2020.
+
+Our workshop is divided into 4 parts :
+
+1. Introduction to R-Ladies history and R-Ladies Tunis 
+2. History and Overview of R, RStudio and RStudio Cloud
+3. Getting started with R and RStudio : Installation 
+4. Presentation of data structures and data types in R
+
+# **R-Ladies History**
+
+R-Ladies is a worldwide organisation created on 1st October, 2020 by Gabriela de Queiroz.
+Since then R-Ladies has grown to 138 chapters in 44 countries and has about 39 000 members.
+
+# **R-Ladies Tunis**
+We get together in May,2020 we are a group of ladies from different backgrounds : 
+
+- Hedia Tnani : Bioinformatician 
+- Mouna Belaid : Data Scientist
+- Haifa Ben Messaoud : Data Scientist
+- Oumaima Lahiani : Data Scientist
+- Ines Amroussia : Biostatistician 
+- Souha Bettayeb : Technologist Assistant 
+- Zina Ben Ammar : Data Manager 
+- Itaf Hamrouni : Data Scientist 
+- Khaoula Oueslati : Data Scientist
+- Nermine Ben Rich : Data Scientist 
+- Sabrine Belmabrouk : Bioinformatician
+
+Our mission is to promote gender diversity in the R community.
+
+# **History of R, RStudio and RStudio Cloud**
+## **R :**
+
+R is a statistical programming language that allows the user to program algorithms and use tools that have been programmed by others.
+With R you can write functions, do calculations, apply most available
+statistical techniques, create simple or complicated graphs, and even write your own library functions.
+
+R is a relatively recent development. In 1991, it was created in New Zealand by two gentleman named Ross Ihaka and Robert Gentleman.
+In 1993 the first announcement of R was made to the public. 1995, Martin Michler convinced Ross and Robert to use, to license R under the GNU General Public License. And that made R what we call free software. 1996 a mailing list was developed, so there's two main mailing lists. One called R-help, which is a general mailing list for questions. And R-devel, which is a more specific mailing list for people who are doing development work in R.
+
+One of the main benefits of R is that it runs on any standard computing platform or operating system. Mac, Windows, Linux whatever you want even on your PlayStation 3 and there are frequent releases, so there are annual major releases and often there are bug fixes releases in between. There is a very active development going on and so things are happening.
+
+
+### **History :**
+
+*1997 :* The R core group was formed that controls the source code for R.
+
+*2000 :* R version 1.0.0 is released [link](https://cran-archive.r-project.org/bin/windows/base/old/R1000.zip).
+
+*2004 :* R version 2.0.0 is released on October 2004 [link](https://cran-archive.r-project.org/bin/windows/base/old/2.0.0/).
+
+*2013 :* R version 3.0.0 is released on December 2013 [link](https://cran.r-project.org/bin/windows/base/old/3.0.0/).
+
+*2020 :* R version 4.0.0 is released on April 2020 [link](https://cran.r-project.org/bin/windows/base/old/4.0.0/).
+
+If you want to have a deeper overview and more info about R, take a look at this (book)[https://bookdown.org/rdpeng/rprogdatascience/] **R Programming for Data Science** which is created by he **bookdown** package which is an open-source R package that facilitates writing books and long-form articles/reports with R **Markdown**.
+
+### **Main key advantages of R :**
+
+R is open source.
+
+R is widely used.
+
+R is powerful.
+
+
+
+## **RStudio :**
+
+RStudio is an integrated development environment that allows users to develop and edit programs in R by supporting a large number of statistical packages and higher quality graphics. It includes a console, syntax-highlighting editor that supports direct code execution, and a variety of robust tools for plotting, viewing history, debugging and managing your workspace. RStudio makes R more user-friendly.
+
+In R, you can write a program and run the code independently of any other computer program. RStudio however, must be used alongside R in order to properly write functions. 
+
+R and RStudio are not separate versions of the same program, and cannot be substituted for one another. R may be used without RStudio, but RStudio may not be used without R.
+
+Download RStudio : [link](https://rstudio.com/products/rstudio/download/)
+ 
+## **RStudio Cloud :**
+
+RStudio Cloud, a version of RStudio that can be accessed in any web browser. RStudio Cloud has the same features of the Desktop version of RStudio. To learn more about it, we invite you to look at [the Cloud Guide](https://rstudio.cloud/learn/guide).
+
+
+# **R and RStudio Installation**
+
+For the installation part you can find it in our YouTube channel :
+[link](https://www.youtube.com/channel/UCfoktGmvJ6rnME7mSP_Ww2g/videos)
+
+You can also follow those links which are in french :
+[link](https://www.youtube.com/watch?v=55a2drjIy-I)
+[link](https://www.youtube.com/watch?v=9GoswKwKDRE)
+
+
+# **Presentation of Data Types and Data Structure in R**
+## **Data Types**
+R can be used as a calculator as you can see in the example below :
+
+```{r}
+a <- 2+2
+a
+```
+### Vectors
+Vector is a basic data structure in R. It can contain single or multiple elements.
+#### Single element
+```{r}
+b <- 1
+b
+```
+#### Multiple element 
+When we want to create vector with more than one element, we should use c() function which means to combine the elements into a vector. 
+It contains element of the same type. The data types can be logical, integer, double, character, complex or raw.
+
+a vector can be numeric 
+```{r}
+b <- c(1,2,3,4) 
+b
+```
+a vector can be a character 
+```{r}
+c <- c("a", "b", "c") 
+c
+```
+a vector can be logical so it can have two values : TRUE or FALSE 
+```{r}
+d <- c(TRUE, FALSE) 
+d
+```
+### Matrix 
+A matrix is a two-dimensional rectangular data set. It can be created using a vector input to the matrix function.
+
+```{r}
+height <- c(15,2,3,4,5)
+weight <- c(14,24,34,44,54)
+myfirstmatrix <- cbind(height, weight)
+myfirstmatrix
+```
+
+You can generate a matrix and give it the number of rows by nrow and the number of columns by ncol
+```{r}
+m <- matrix(1:6,nrow=2, ncol=3)
+m
+```
+```{r}
+m <- matrix(1:6,nrow=2, ncol=3, byrow = TRUE)
+m
+```
+
+### Dataframes
+
+Data frames are tabular data objects. Unlike a matrix in data frame each column can contain different modes of data. 
+Data Frames are created using the data.frame() function.
+
+```{r}
+data <- data.frame(
+gender = c("Male", "Male", "Female"),
+height =c(152,171.5, 165),
+weight=c(81,93,78),
+Age=c(42,38,26))
+data
+```
+
+### Lists
+
+A list is an R-object which can contain many different types of elements inside it like vectors, functions and even another list inside it.
+
+```{r}
+x <- list(1,"a",TRUE)
+x
+```
+
+### Arrays
+
+While matrices are confined to two dimensions, arrays can be of any number of dimensions. The array function takes a dim attribute which creates the required number of dimension.
+
+```{r}
+a <- c(5,6,4,3,2,1)
+b <- c(10,11,12,13,14,15,16,17,18)
+array1 <- array(c(a,b), dim=c(3,3,2))
+array1
+```
