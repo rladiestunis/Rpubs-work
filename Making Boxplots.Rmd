@@ -1,0 +1,76 @@
+---
+title: "How to make a boxplot using R"
+author: "R-Ladies Tunis"
+date: "25/06/2020"
+output:
+  prettydoc::html_pretty:
+    theme: hpstr
+    highlight: github
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+``` 
+
+# **Introduction**
+Previously, we talked about barplots and how to make them. In this article we will talk about boxplots. A boxplot is a standardized way of displaying the distribution of data based on a five number summary (“minimum”, first quartile (Q1), median, third quartile (Q3), and “maximum”). It can tell you about your outliers and what their values are. It can also tell you if your data is symmetrical, how tightly your data is grouped, and if and how your data is skewed.
+
+# **Basic Boxplot**
+
+First, we will create a basic boxplot: 
+
+```{r,include=FALSE}
+library(ggplot2)
+```
+```{r,include=TRUE}
+# Boxplot of Diamonds'price by cut
+boxplot(price~cut,data=diamonds, main="Dimonds'price by cut",
+   xlab="Price", ylab="Cut")
+```
+
+# **Boxplot using ggplot2**
+
+Now, let's make the graph look prettier using ggplot2. The geom_boxplot() function we can determine the color of the bars. With ggtitle() you can add the title of the graph and the title of the axes.
+
+```{r,include=TRUE}
+#loding ggplot2 package
+library(ggplot2)
+
+p<-ggplot(diamonds, aes(x=cut, y=price, color=cut)) +
+  geom_boxplot()+
+  ggtitle("Diamonds'price by cut") +
+  xlab("Price") + ylab("Cut")
+p
+```
+
+# **Boxplot using ggstatplot**
+
+ggstatsplot is an extension of ggplot2 package for creating graphics with details from statistical tests included in the information-rich plots themselves. We will use this package to create a boxplot.
+
+```{r,include=TRUE,message=FALSE,warning=FALSE}
+# loading needed libraries
+library(ggstatsplot)
+
+# for reproducibility
+set.seed(123)
+
+# plot
+ggstatsplot::ggbetweenstats(
+  data = diamonds,
+  x = cut,
+  y = price,
+  title = "Diamonds'price by cut"
+)
+```
+
+# **Boxplot using plotly**
+
+Now let's make the barplot interactive using plotly. An interactive graph is very useful when we work with dashboards.
+
+```{r,include=TRUE,message=FALSE,warning=FALSE}
+#loding plotly package
+library(plotly)
+
+p <- plot_ly(ggplot2::diamonds, y = ~price, color = ~cut, type = "box")
+p
+```
